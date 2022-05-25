@@ -1,0 +1,67 @@
+:root {
+    --corDarkBlue300:#0A3871; /* azul dos botoes e letras*/
+
+    --corLightBlue100:#d0d0d3d5; /* cor do background */
+}
+* {
+    padding: 0px;
+    margin: 0px;
+}
+body {
+    background-color: var(--corLightBlue100);
+}
+
+header > h1 {
+    margin-top: 40px;
+}
+
+main{
+
+}
+
+#botao-comecar {
+    display: block;
+    margin: auto;
+    margin-top: 306px;
+
+    width: 317px;
+    height: 105px;
+    background-color: var(--corDarkBlue300);
+    color: white;
+    border-radius: 24px;
+
+    cursor: pointer;
+}
+
+#botao-adicionar {
+    display: block;
+    margin: auto;
+    margin-top: 53px;
+
+    width: 317px;
+    height: 105px;
+    color: var(--corDarkBlue300);
+    border-color: var(--corDarkBlue300);
+    border-radius: 24px;
+
+    cursor: pointer;
+}
+
+footer {
+    background-color: var(--corDarkBlue300);
+    color: white;
+    text-align: center;
+    padding: 50px;
+    margin-top: 108px;
+}
+
+#img-github {
+    margin-top: 10px;
+}
+
+#img-linkedin {
+    margin-left: 25px;
+}
+#img-github:hover, #img-linkedin:hover {
+    background-color: white;
+}
