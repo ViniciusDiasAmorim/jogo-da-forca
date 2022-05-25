@@ -12,8 +12,16 @@
         <h1><img src="imagens/Logo.png" alt="logo da alura"></h1>  
     </header>
     <main>
-            <button id="botao-comecar">Começar a jogar</button>
-            <button id="botao-adicionar">Adicionar nova palavra</button>
+            <textarea name="adicionar-area" id="adicionar-area" cols="30" rows="10" placeholder="Digite a palavra"></textarea>
+            <div id="botoes-adicionar">
+                <button id="botao-salvar" class="botao-azul">Salvar e começar</button>
+                <button id="botao-cancelar" class="botao-claro">Cancelar</button>
+            </div>
+
+            <div id="botoes-opcoes">
+                <button id="botao-comecar" class="botao-azul">Começar a jogar</button>
+                <button id="botao-adicionar" class="botao-claro" onclick="Adicionar()">Adicionar nova palavra</button>
+            </div>
     </main>
     <footer>
         <p>Criado por Vinicius Dias, Desafio Alura + Oracle One Next Education.</p>
@@ -21,8 +29,6 @@
             <img id="img-github" src="imagens/github.png"></a>
             <a href="https://www.linkedin.com/in/vinicius-dias-a8495b236/" target="_blank">
             <img id="img-linkedin" src="imagens/linkedin.png"></a>
-            
-        
     </footer>
 </body>
 <script src="main.js"></script>
