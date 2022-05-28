@@ -12,16 +12,66 @@
         <h1><img src="imagens/Logo.png" alt="logo da alura"></h1>  
     </header>
     <main>
-            <textarea name="adicionar-area" id="adicionar-area" cols="30" rows="10" placeholder="Digite a palavra"></textarea>
-            <div id="botoes-adicionar">
-                <button id="botao-salvar" class="botao-azul">Salvar e começar</button>
-                <button id="botao-cancelar" class="botao-claro">Cancelar</button>
+        <div id="tela-opcoes">
+                <div id="botoes-iniciais-container">
+                    <button id="botao-comecar" class="botao-azul" onclick="Tela(1)">Começar a jogar</button>
+                    <button id="botao-adicionar" class="botao-claro" onclick="Tela(2)">Adicionar nova palavra</button>
+                </div>
+        </div>
+        <div id="tela-adicionar">
+            <textarea name="adicionar-area" id="adicionar-area" cols="30" rows="10" placeholder="Digite a palavra" maxlength="30"></textarea>
+            <div id="aviso">
+                <p><img src="imagens/exclamaçao.png" alt="sinal de atenção">&nbsp;Maximo de 30 caracteres, Somente letras maiusculas e sem acentos.</p>
             </div>
-
-            <div id="botoes-opcoes">
-                <button id="botao-comecar" class="botao-azul">Começar a jogar</button>
-                <button id="botao-adicionar" class="botao-claro" onclick="Adicionar()">Adicionar nova palavra</button>
+            <div id="botoes-adicionar-container">
+                <button id="botao-salvar" class="botao-azul" onclick="Tela(3)">Salvar e começar</button>
+                <button id="botao-cancelar" class="botao-claro" onclick="Tela(4)">Cancelar</button>
             </div>
+        </div>
+        <div id="tela-jogo">
+            <div id="forca">
+                <div id="corpo-braco-direito" class="elementos-da-forca">
+                    <img src="imagens/forca/9.png" alt="fragmento da forca">
+                </div>
+                <div id="corpo-braco-esquerdo" class="elementos-da-forca">
+                    <img src="imagens/forca/8.png" alt="fragmento da forca">
+                </div>
+                <div id="corpo-pe-direito" class="elementos-da-forca">
+                    <img src="imagens/forca/7.png" alt="fragmento da forca">
+                </div>
+                <div id="corpo-pe-esquerdo" class="elementos-da-forca">
+                    <img src="imagens/forca/6.png" alt="fragmento da forca">
+                </div>
+                <div id="corpo-tronco" class="elementos-da-forca">
+                    <img src="imagens/forca/5.png" alt="fragmento da forca">
+                </div>
+                <div id="corpo-cabeca" class="elementos-da-forca">
+                    <img src="imagens/forca/4.png" alt="fragmento da forca">
+                </div>
+                <div id="forca-corda" class="elementos-da-forca">
+                    <img src="imagens/forca/3.png" alt="fragmento da forca">
+                </div>
+                <div id="forca-suporte" class="elementos-da-forca">
+                    <img src="imagens/forca/2.png" alt="fragmento da forca">
+                </div>
+                <div id="forca-aresta" class="elementos-da-forca">
+                    <img src="imagens/forca/1.png" alt="fragmento da forca">
+                </div>
+                <div id="forca-base" class="elementos-da-forca">
+                    <img src="imagens/forca/0.png" alt="fragmento da forca">
+                </div>
+            </div>
+            <div id="palavras">
+                <div class="container-letra">
+                    <span class="digitado">A</span>
+                    <img src="imagens/forca/Palavra.png" alt="sublinhado para a palavra" class="campo-da-letra">
+                </div>  
+            </div>
+            <div id="botoes-jogo-container">
+                <button class="botao-azul" onclick="Tela(5)">Novo jogo</button>
+                <button class="botao-claro" onclick="Tela(6)">Desistir</button>
+            </div>
+        </div>
     </main>
     <footer>
         <p>Criado por Vinicius Dias, Desafio Alura + Oracle One Next Education.</p>
