@@ -168,7 +168,8 @@ textarea::placeholder {
     top: 50px;
 }
 
-.digitado {
+.digitado,.digitado-revelado {
+    display: none;
     position: absolute;
     font-size: 32px;
     top: 10px;
