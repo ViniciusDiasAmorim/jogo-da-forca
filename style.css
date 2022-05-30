@@ -168,12 +168,20 @@ textarea::placeholder {
     top: 50px;
 }
 
-.digitado,.digitado-revelado {
+.digitado, .digitado-errado {
     display: none;
     position: absolute;
     font-size: 32px;
     top: 10px;
     left: 30px;
+}
+#palavras-incorretas {
+    display: flex;
+    flex-wrap: wrap;
+}
+.digitado-errado {
+    display: block;
+    margin-top: 30px;
 }
 
 #botoes-jogo-container {
