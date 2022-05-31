@@ -5,6 +5,8 @@ const letras = document.getElementsByClassName("digitado")
 const montandoTabuleiro = document.querySelector("#palavras");
 const letrasErradas = document.querySelector("#palavras-incorretas");
 const forca = document.getElementsByClassName("elementos-da-forca")
+const addPalavra = document.querySelector("#adicionar-area");
+const addDica = document.querySelector("#adicionar-area-dica");
 
 var palavrasRegistradas =   [{"palavra":"ABACAXI","dica":"FRUTA"},{"palavra":"BANANA","dica":"FRUTA"},{"palavra":"ABACATE","dica":"FRUTA"},
                              {"palavra":"BRASIL","dica":"PAÍS"},{"palavra":"INGLATERRA","dica":"PAÍS"},{"palavra":"FUTEBOL","dica":"ESPORTE"}];
@@ -12,7 +14,8 @@ var palavrasRegistradas =   [{"palavra":"ABACAXI","dica":"FRUTA"},{"palavra":"BA
 var palavrasDescobertas = [];
 var palavrasErradas = [];
 var palavraEnigma;
-var tentativas = 9;
+var tentativasErradas = 9;
+var tentativasCorretas = 0;
 
 function Tela(opcao) 
 {
@@ -25,6 +28,7 @@ function Tela(opcao)
         telaJogo.setAttribute('style','display:block');
         palavraEnigma = Sortear();
         CriandoTabuleiro();
+        tentativasCorretas = palavraEnigma.palavra.length
         document.body.onkeypress = Tecla;
         console.log(palavraEnigma.palavra)
     }
@@ -38,9 +42,19 @@ function Tela(opcao)
     else if (opcao == 3)
     {
         //Salvar e Começar
-        telaOpcoes.setAttribute('style','display:none');
-        telaAdiciona.setAttribute('style','display:none');
-        telaJogo.setAttribute('style','display:block');
+        var validaSalvamento = Salvar();
+
+        if(validaSalvamento)
+        {
+            telaOpcoes.setAttribute('style','display:none');
+            telaAdiciona.setAttribute('style','display:none');
+            telaJogo.setAttribute('style','display:block');
+            palavraEnigma = Sortear();
+            CriandoTabuleiro();
+            tentativasCorretas = palavraEnigma.palavra.length
+            document.body.onkeypress = Tecla;
+            console.log(palavraEnigma.palavra)
+        }
     }
     else if (opcao == 4)
     {
@@ -55,6 +69,7 @@ function Tela(opcao)
         telaOpcoes.setAttribute('style','display:none');
         telaAdiciona.setAttribute('style','display:none');
         telaJogo.setAttribute('style','display:block');
+        Reestart();
         CriandoTabuleiro();
     }
     else if (opcao == 6)
@@ -77,8 +92,13 @@ function CriandoTabuleiro()
         montandoTabuleiro.innerHTML +=  `<div class="container-letra">` + '\n' +
                                         `<span class="digitado">${letra.toUpperCase()}</span>` + '\n' +
                                          `<img src="imagens/forca/Palavra.png" alt="sublinhado para a palavra" class="campo-da-letra">` + '\n' +
-                                         `</div>`                               
+                                         `</div>`;                               
     }
+
+    var criandoContainerDica = document.createElement("div")
+    letrasErradas.insertAdjacentHTML("beforebegin",'<div id="container-dica">');
+    var containerDica = document.querySelector("#container-dica");
+    containerDica.appendChild(document.createElement("p")).textContent = "DICA: " + palavraEnigma.dica;
 }
 
 function Sortear() 
@@ -90,48 +110,53 @@ function Sortear()
 
 function Tecla()
 {
-    if(event.keyCode>= 65 && event.keyCode <= 90) 
+    if(tentativasErradas > -1 && tentativasCorretas > 0)
     {
-        var letraDescoberta = String.fromCharCode(event.keyCode)
-    
-            if(palavraEnigma.palavra.match(letraDescoberta))
-            {
-                var validaEntradaArray = true;
-                for (let i = 0; i < palavrasDescobertas.length; i++) 
+        if(event.keyCode>= 65 && event.keyCode <= 90) 
+        {
+            var letraDescoberta = String.fromCharCode(event.keyCode)
+        
+                if(palavraEnigma.palavra.match(letraDescoberta))
                 {
-                    if(palavrasDescobertas[i] == letraDescoberta)
+                    var validaEntradaArray = true;
+                    for (let i = 0; i < palavrasDescobertas.length; i++) 
                     {
-                        validaEntradaArray = false
+                        if(palavrasDescobertas[i] == letraDescoberta)
+                        {
+                            validaEntradaArray = false;
+                        }
+                    }
+                    if (validaEntradaArray == true)
+                    {
+                        palavrasDescobertas.push(letraDescoberta);
+                        RevelarLetra();
+                        ValidaVitoria(letraDescoberta);
+                    }
+                    
+                }
+                if(!palavraEnigma.palavra.match(letraDescoberta))
+                {
+                    var validaEntradaArray = true;
+                    for (let i = 0; i < palavrasErradas.length; i++) 
+                    {
+                        if(palavrasErradas[i] == letraDescoberta)
+                        {
+                            validaEntradaArray = false;
+                        }
+                    }
+                    if (validaEntradaArray == true)
+                    {
+                        palavrasErradas.push(letraDescoberta);
+                        tentativasErradas--;
+                        EscreverLetraErrada();
                     }
                 }
-                if (validaEntradaArray == true)
-                {
-                    palavrasDescobertas.push(letraDescoberta);
-                }
-            }
-            if(!palavraEnigma.palavra.match(letraDescoberta))
-            {
-                var validaEntradaArray = true;
-                for (let i = 0; i < palavrasErradas.length; i++) 
-                {
-                    if(palavrasErradas[i] == letraDescoberta)
-                    {
-                        validaEntradaArray = false
-                    }
-                }
-                if (validaEntradaArray == true)
-                {
-                    palavrasErradas.push(letraDescoberta);
-                    tentativas--;
-                    EscreverLetraErrada();
-                }
-            }
+        }
+        else
+        {
+            window.alert("Apenas letras maiusculas");
+        }
     }
-    else
-    {
-        window.alert("Apenas letras maiusculas")
-    }
-    RevelarLetra();
 }
 
 function RevelarLetra()
@@ -174,14 +199,92 @@ function EscreverLetraErrada()
 
 function DesenharForca()
 {
-    if(tentativas >= -1)
+    if(tentativasErradas >= -1)
     {
-        for(let i = 9; i > tentativas; i--)
+        for(let i = 9; i > tentativasErradas; i--)
         {
-            for(let n = 9; n > tentativas; n--)
+            for(let n = 9; n > tentativasErradas; n--)
             {
-                forca[n].setAttribute('style','display:block')
+                forca[n].setAttribute('style','display:block');
             }
+        }
+        if(tentativasErradas == -1)
+        {
+            MensagemPerder();
         }
     }
 }
+
+function MensagemPerder() 
+{
+    telaJogo.appendChild(document.createElement('div')).classList.add('container-mensagem');
+    document.querySelector(".container-mensagem").appendChild(document.createElement('p')).classList.add("mensagem-derrota");
+    document.querySelector(".mensagem-derrota").textContent = "Voce Perdeu!";
+}
+
+function MensagemGanhou()
+{
+    telaJogo.appendChild(document.createElement('div')).classList.add('container-mensagem');
+    document.querySelector(".container-mensagem").appendChild(document.createElement('p')).classList.add("mensagem-vitoria");
+    document.querySelector(".mensagem-vitoria").textContent = "Voce Ganhou!";
+}
+
+function ValidaVitoria(letraDescoberta)
+{
+    for(let i = 0; i < palavraEnigma.palavra.length;i++)
+    {
+        if(letraDescoberta == palavraEnigma.palavra[i])
+        {
+            tentativasCorretas--;
+        }
+        if(tentativasCorretas == 0)
+        {
+            MensagemGanhou();
+        }
+    }
+    console.log(tentativasCorretas)
+}
+
+function Salvar()
+{
+    if(addPalavra.value != "" && addDica.value != "")
+    {
+        console.log(addPalavra.value + " " +addDica.value);
+        var palavra = addPalavra.value.toUpperCase();
+        var dica = addDica.value.toUpperCase();
+        palavrasRegistradas.push({palavra,dica});
+        return true;
+    }
+    else
+    {
+        window.alert("Necessario uma palavra e uma dica");
+        return false;
+    }
+    
+}
+
+function Reestart()
+{
+    tentativasCorretas = 0;
+    tentativasErradas = 9;
+    palavrasErradas = [];
+    palavrasDescobertas = [];
+    palavraEnigma = Sortear();
+    tentativasCorretas = palavraEnigma.palavra.length
+
+    var removeDicas = document.getElementById("container-dica");
+    removeDicas.remove();
+
+    var removeMensagem = document.getElementsByClassName("container-mensagem")
+    removeMensagem[0].remove();
+    
+
+    // for(let i = 9; i > tentativasErradas; i--)
+    //     {
+    //         for(let n = 9; n > tentativasErradas; n--)
+    //         {
+    //             forca[n].setAttribute('style','display:block');
+    //         }
+    //     }
+
+ }
