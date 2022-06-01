@@ -4,7 +4,7 @@ const telaJogo = document.querySelector("#tela-jogo");
 const letras = document.getElementsByClassName("digitado")
 const montandoTabuleiro = document.querySelector("#palavras");
 const letrasErradas = document.querySelector("#palavras-incorretas");
-const forca = document.getElementsByClassName("elementos-da-forca")
+const forca = document.getElementsByClassName("elementos-da-forca");
 const addPalavra = document.querySelector("#adicionar-area");
 const addDica = document.querySelector("#adicionar-area-dica");
 
@@ -17,10 +17,14 @@ var palavraEnigma;
 var tentativasErradas = 9;
 var tentativasCorretas = 0;
 
-
 function Tela(opcao) 
 {
-    //1 = Começar um jogo 2 = Adicionar uma palvra nova, 3 = Salvar e Começar a jogar, 4 = Cancelar , 5 = Novo jogo, 6 = Desistir
+    // 1 = Começar um jogo
+    // 2 = Adicionar uma palvra nova
+    // 3 = Salvar e Começar a jogar
+    // 4 = Cancelar
+    // 5 = Novo jogo
+    // 6 = Desistir
     if(opcao == 1)
     {
         //Começa um Jogo
@@ -73,8 +77,6 @@ function Tela(opcao)
         telaJogo.setAttribute('style','display:block');
         Reestart();
         CriandoTabuleiro();
-
-
     }
     else if (opcao == 6)
     {
@@ -98,8 +100,6 @@ function CriandoTabuleiro()
                                          `<img src="imagens/forca/Palavra.png" alt="sublinhado para a palavra" class="campo-da-letra">` + '\n' +
                                          `</div>`;                               
     }
-
-    var criandoContainerDica = document.createElement("div")
     letrasErradas.insertAdjacentHTML("beforebegin",'<div class="container-dica">');
     var containerDica = document.querySelector(".container-dica");
     containerDica.appendChild(document.createElement("p")).textContent = "DICA: " + palavraEnigma.dica;
@@ -120,41 +120,41 @@ function Tecla()
         {
             var letraDescoberta = String.fromCharCode(event.keyCode)
         
-                if(palavraEnigma.palavra.match(letraDescoberta))
+            if(palavraEnigma.palavra.match(letraDescoberta))
+            {
+                var validaEntradaArray = true;
+                for (let i = 0; i < palavrasDescobertas.length; i++) 
                 {
-                    var validaEntradaArray = true;
-                    for (let i = 0; i < palavrasDescobertas.length; i++) 
+                    if(palavrasDescobertas[i] == letraDescoberta)
                     {
-                        if(palavrasDescobertas[i] == letraDescoberta)
-                        {
-                            validaEntradaArray = false;
-                        }
-                    }
-                    if (validaEntradaArray == true)
-                    {
-                        palavrasDescobertas.push(letraDescoberta);
-                        RevelarLetra();
-                        ValidaVitoria(letraDescoberta);
-                    }
-                    
-                }
-                if(!palavraEnigma.palavra.match(letraDescoberta))
-                {
-                    var validaEntradaArray = true;
-                    for (let i = 0; i < palavrasErradas.length; i++) 
-                    {
-                        if(palavrasErradas[i] == letraDescoberta)
-                        {
-                            validaEntradaArray = false;
-                        }
-                    }
-                    if (validaEntradaArray == true)
-                    {
-                        palavrasErradas.push(letraDescoberta);
-                        tentativasErradas--;
-                        EscreverLetraErrada();
+                        validaEntradaArray = false;
                     }
                 }
+                if (validaEntradaArray == true)
+                {
+                    palavrasDescobertas.push(letraDescoberta);
+                    RevelarLetra();
+                    ValidaVitoria(letraDescoberta);
+                }
+                
+            }
+            if(!palavraEnigma.palavra.match(letraDescoberta))
+            {
+                var validaEntradaArray = true;
+                for (let i = 0; i < palavrasErradas.length; i++) 
+                {
+                    if(palavrasErradas[i] == letraDescoberta)
+                    {
+                        validaEntradaArray = false;
+                    }
+                }
+                if (validaEntradaArray == true)
+                {
+                    palavrasErradas.push(letraDescoberta);
+                    tentativasErradas--;
+                    EscreverLetraErrada();
+                }
+            }
         }
         else
         {
@@ -246,7 +246,6 @@ function ValidaVitoria(letraDescoberta)
             MensagemGanhou();
         }
     }
-    console.log(tentativasCorretas)
 }
 
 function Salvar()
@@ -263,16 +262,11 @@ function Salvar()
     {
         window.alert("Necessario uma palavra e uma dica");
         return false;
-    }
-    
+    } 
 }
 
 function Reestart()
 {
-    console.log(palavraEnigma.palavra)
-    console.log(palavrasErradas)
-    console.log(palavrasDescobertas)
-
     tentativasCorretas = 0;
     tentativasErradas = 9;
     palavrasDescobertas = [];
