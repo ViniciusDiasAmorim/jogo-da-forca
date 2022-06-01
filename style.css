@@ -188,7 +188,7 @@ textarea::placeholder {
 #botoes-jogo-container {
     margin-top: 150px;
 }
-#container-dica {
+.container-dica {
     margin-top: 25px;
     font-size: 22px;
 }
