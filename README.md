@@ -1,4 +1,4 @@
-Ola ! Este jogo foi elaborado para coloar meu conhecimentos de javascript em pratica e afiar a minha logica de programação.
+Ola ! Este jogo foi elaborado para coloar meus conhecimentos de javascript em pratica e afiar a minha logica de programação.
 
 Como o projeto deve funcionar:
 
