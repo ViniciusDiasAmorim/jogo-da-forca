@@ -1,4 +1,4 @@
-#Jogo da Forca
+# Jogo da Forca
 Um simples e divertido jogo da forca !
 
 Ola ! Este jogo foi elaborado para colocar meus conhecimentos de javascript em pratica e afiar a minha logica de programação.
